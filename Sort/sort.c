@@ -47,22 +47,22 @@ void shell_sort(element list[], int n) {
 void merge(element list[], int left, int mid, int right) {
     int i = left, k = mid;
     element* sorted = (element*)malloc(sizeof(element) * (right - left));
-    int m = left;
+    int idx = left;
     while (i < mid && k < right)
         if (list[i] < list[k])
-            sorted[m++] = list[i++];
+            sorted[idx++] = list[i++];
         else
-            sorted[m++] = list[k++];
+            sorted[idx++] = list[k++];
 
     if (i < mid)
         while (i < mid)
-            sorted[m++] = list[i++];
+            sorted[idx++] = list[i++];
     else
         while (k < right)
-            sorted[m++] = list[k++];
+            sorted[idx++] = list[k++];
         
-    for (m = left; m < right; m++)
-        list[m] = sorted[m];
+    for (i = left, k = 0; i < right; i++, k++)
+        list[i] = sorted[k];
 
     free(sorted);
 }
@@ -73,27 +73,5 @@ void merge_sort(element list[], int left, int right) {
         merge_sort(list, left, mid);
         merge_sort(list, mid, right);
         merge(list, left, mid, right);
-        /*
-        int i = left, k = mid;
-        //element* sorted = (element*)malloc(sizeof(element) * (right - left));
-        int m = left;
-        while (i < mid && k < right)
-            if (list[i] < list[k])
-                sorted[m++] = list[i++];
-            else
-                sorted[m++] = list[k++];
-
-        if (i < mid)
-            while (i < mid)
-                sorted[m++] = list[i++];
-        else
-            while (k < right)
-                sorted[m++] = list[k++];
-            
-        for (m = left; m < right; m++)
-            list[m] = sorted[m];
-
-        //free(sorted);
-        */
     }
 }
