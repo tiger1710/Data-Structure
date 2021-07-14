@@ -1,10 +1,9 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include "sort.h"
-
-#define MAX_SIZE 10
+#include <time.h>
+#include "quick.h"
 
 int main(void) {
+    srand((unsigned int)time(NULL));
     element list[MAX_SIZE];
     for (int i = 0; i < MAX_SIZE; i++)
         list[i] = rand() % 100;
@@ -14,7 +13,7 @@ int main(void) {
         printf("%d ", list[i]);
     puts("");
     
-    merge_sort(list, 0, MAX_SIZE);
+    quick_sort(list, 0, MAX_SIZE);
 
     puts("정렬후");
     for (int i = 0; i < MAX_SIZE; i++)
