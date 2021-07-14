@@ -1,20 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-
-#define MAX_QUEUE_SIZE 10
-typedef int element;
-typedef struct Queue {
-    int front, rear;
-    element data[MAX_QUEUE_SIZE];
-} Queue;
+#include "queue.h"
 
 bool is_empty(Queue* q) {
-    return q->front == q->rear - 1;
+    return q->front == q->rear;
 }
 
 bool is_full(Queue* q) {
-    return q->rear == MAX_QUEUE_SIZE;
+    return (q->rear + 1) % MAX_QUEUE_SIZE == q->front;
 }
 
 void init(Queue* q) {
@@ -24,6 +18,7 @@ void init(Queue* q) {
 void enqueue(Queue* q, element item) {
     if (is_full(q)) return;
     q->data[q->rear++] = item;
+    q->rear %= MAX_QUEUE_SIZE;
 }
 
 element front(Queue* q) {
@@ -33,6 +28,7 @@ element front(Queue* q) {
 void dequeue(Queue* q) {
     if (is_empty(q)) return;
     q->front++;
+    q->front %= MAX_QUEUE_SIZE;
 }
 
 void print_queue(Queue* q) {
@@ -40,29 +36,9 @@ void print_queue(Queue* q) {
         printf("큐가 비었습니다.\n");
         return;
     }
-    for (int i = q->front; i < q->rear; i++) {
+    for (int i = q->front; (i % MAX_QUEUE_SIZE) != q->rear; i++) {
+        i %= MAX_QUEUE_SIZE;
         printf("%d | ", q->data[i]);
     }
     puts("");
-}
-
-int main(void) {
-    Queue* q = (Queue*)malloc(sizeof(Queue));
-    init(q);
-
-    for (int i = 0; i < 3; i++) {
-        element item = rand() % 20;
-        enqueue(q, item);
-    }
-
-    print_queue(q);
-
-    while (!is_empty(q)) {
-        dequeue(q);
-        print_queue(q);
-    }
-
-    free(q);
-
-    return 0;
 }
