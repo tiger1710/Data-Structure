@@ -45,3 +45,34 @@ Node* delete(Node* head, Node* prev) {
     free(removed);
     return head;
 }
+
+Node* concat(Node* list1, Node* list2) {
+    Node* p = list1;
+    while (p->link != p)
+        p = p->link;
+    p->link = list2;
+    return list1;
+}
+
+Node* reverse(Node* head) {
+    Node* p = head;
+    Node* q = NULL;
+    Node* r;
+
+    while (p) {
+        r = q;
+
+        q = p;
+        p = p->link;
+        q->link = r;
+    }
+
+    return q;
+}
+
+Node* reverse_recur(Node* curr, Node* prev) {
+    if (curr == NULL) return prev;
+    Node* next = curr->link;
+    curr->link = prev;
+    return reverse_recur(next, curr);
+}
