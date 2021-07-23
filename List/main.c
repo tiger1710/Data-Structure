@@ -1,4 +1,4 @@
-#include "node.h"
+#include "list.h"
 #include <stdlib.h>
 
 int main(void) {
@@ -18,6 +18,10 @@ int main(void) {
     );
 
     print_list(head);
+
+    head = reverse_recur(head, NULL);
+    print_list(head);
+
 
     return 0;
 }
